@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Center | Nama Kamu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card, .login-box, .loading-box {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card, .loading-box {
+            display: none;
+        }
+
+        .icon-box {
+            background: #eef2ff;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+        }
+
+        h1 {
+            color: #1f2937;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 12px;
+            width: 80%;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            background: #4f46e5;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn-download {
+            background-color: #4f46e5;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            display: block;
+            transition: 0.3s;
+            box-shadow: 0 4px 12px rgba(79,70,229,0.3);
+        }
+
+        .btn-download:hover {
+            background-color: #4338ca;
+            transform: translateY(-2px);
+        }
+
+        .footer-text {
+            margin-top: 25px;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        /* SPINNER */
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #eef2ff;
+            border-top: 5px solid #4f46e5;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-box show" id="loginBox">
+    <div class="icon-box">🔒</div>
+    <h1>Masukkan Password</h1>
+    <p>Silakan masukkan password untuk mengakses asset</p>
+
+    <input type="password" id="password" placeholder="Masukkan password">
+    <br>
+    <button onclick="checkPassword()">Masuk</button>
+
+    <p id="error" style="color:red;"></p>
+</div>
+
+<!-- LOADING -->
+<div class="loading-box" id="loadingBox">
+    <div class="spinner"></div>
+    <h1>Loading...</h1>
+    <p>Sebentar lagi di verifikasi</p>
+</div>
+
+<!-- KONTEN -->
+<div class="card" id="content">
+    <div class="icon-box">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+    </div>
+
+    <h1>Akses File Map suburian</h1>
+    <p>Silakan klik tombol di bawah ini untuk mengunduh asset animasi nya.</p>
+
+    <a href="https://drive.google.com/uc?id=1LoKrWSib_GnLgDD9byAe2c7swrCKfSJr" class="btn-download" target="_blank">
+        Download
+    </a>
+
+    <div class="footer-text">
+        &copy; 2026 The Yellow Official
+    </div>
+</div>
+
+<script>
+    const correctPassword = "admin2026";
+
+    function checkPassword() {
+        const input = document.getElementById("password").value;
+
+        if (input === correctPassword) {
+            const loginBox = document.getElementById("loginBox");
+            const loadingBox = document.getElementById("loadingBox");
+            const content = document.getElementById("content");
+
+            // fade out login
+            loginBox.classList.remove("show");
+
+            setTimeout(() => {
+                loginBox.style.display = "none";
+
+                // show loading
+                loadingBox.style.display = "block";
+                setTimeout(() => {
+                    loadingBox.classList.add("show");
+                }, 50);
+
+                // setelah loading 2 detik
+                setTimeout(() => {
+                    loadingBox.classList.remove("show");
+
+                    setTimeout(() => {
+                        loadingBox.style.display = "none";
+
+                        // tampilkan konten
+                        content.style.display = "block";
+                        setTimeout(() => {
+                            content.classList.add("show");
+                        }, 50);
+
+                    }, 400);
+
+                }, 2000);
+
+            }, 400);
+
+        } else {
+            document.getElementById("error").innerText = "Password salah!";
+        }
+    }
+</script>
+
+</body>
+</html>
